@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, DragEvent } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { PDFDocument } from 'pdf-lib'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { X, FileText, ArrowDown, Loader2 } from 'lucide-react'
+import { X, FileText, ArrowDown, Loader2, GripVertical } from 'lucide-react'
 
 interface PDFFile extends File {
   preview?: string
@@ -15,6 +15,7 @@ export function PDFMerger() {
   const [files, setFiles] = useState<PDFFile[]>([])
   const [merging, setMerging] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [draggedItem, setDraggedItem] = useState<number | null>(null)
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles(prevFiles => [
@@ -84,6 +85,43 @@ export function PDFMerger() {
     }
   }
 
+  const handleDragStart = (e: DragEvent<HTMLDivElement>, index: number) => {
+    setDraggedItem(index)
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('text/html', e.currentTarget.innerHTML)
+    e.currentTarget.style.opacity = '0.4'
+  }
+
+  const handleDragOver = (e: DragEvent<HTMLDivElement>, index: number) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+  }
+
+  const handleDragEnter = (e: DragEvent<HTMLDivElement>, index: number) => {
+    e.currentTarget.classList.add('bg-gray-100')
+  }
+
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    e.currentTarget.classList.remove('bg-gray-100')
+  }
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>, index: number) => {
+    e.preventDefault()
+    e.currentTarget.classList.remove('bg-gray-100')
+    if (draggedItem === null) return
+
+    const newFiles = [...files]
+    const [reorderedItem] = newFiles.splice(draggedItem, 1)
+    newFiles.splice(index, 0, reorderedItem)
+    setFiles(newFiles)
+    setDraggedItem(null)
+  }
+
+  const handleDragEnd = (e: DragEvent<HTMLDivElement>) => {
+    e.currentTarget.style.opacity = '1'
+    setDraggedItem(null)
+  }
+
   return (
     <div className="max-w-3xl mx-auto">
       <div
@@ -114,8 +152,16 @@ export function PDFMerger() {
               <div
                 key={file.name + index}
                 className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm"
+                draggable
+                onDragStart={(e) => handleDragStart(e, index)}
+                onDragOver={(e) => handleDragOver(e, index)}
+                onDragEnter={(e) => handleDragEnter(e, index)}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => handleDrop(e, index)}
+                onDragEnd={handleDragEnd}
               >
                 <div className="flex items-center gap-3">
+                  <GripVertical className="w-5 h-5 text-gray-400 cursor-move" />
                   <FileText className="w-5 h-5 text-primary" />
                   <span className="font-medium">{file.name}</span>
                   <span className="text-sm text-gray-500">
