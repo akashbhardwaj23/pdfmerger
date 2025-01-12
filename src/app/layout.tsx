@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PdfMerge",
+  title: "PdfTools",
   description: "Merge Your all Pdfs",
 };
 
