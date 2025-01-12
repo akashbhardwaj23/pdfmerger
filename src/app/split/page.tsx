@@ -39,7 +39,7 @@ export default function SplitPage() {
               <div className="flex items-start mb-4">
                 <Info className="w-6 h-6 text-indigo-600 mr-3 flex-shrink-0 mt-1" />
                 <p className="text-gray-700">
-                  Extract specific pages or split your PDF into multiple files. Upload your PDF, specify the page ranges you want to extract, and click "Split PDF" to create your new documents.
+                  Extract specific pages or split your PDF into multiple files. Upload your PDF, specify the page ranges you want to extract, and click &quot;Split PDF&quot; to create your new documents.
                 </p>
               </div>
               <PDFSplitter />

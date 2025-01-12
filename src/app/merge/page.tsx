@@ -39,7 +39,7 @@ export default function MergePage() {
               <div className="flex items-start mb-4">
                 <Info className="w-6 h-6 text-indigo-600 mr-3 flex-shrink-0 mt-1" />
                 <p className="text-gray-700">
-                  Combine multiple PDF files into a single document. Simply drag and drop your files below, arrange them in the desired order, and click "Merge PDFs" to create your new document.
+                  Combine multiple PDF files into a single document. Simply drag and drop your files below, arrange them in the desired order, and click &quot;Merge PDFs&quot; to create your new document.
                 </p>
               </div>
               <PDFMerger />

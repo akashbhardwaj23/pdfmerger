@@ -92,12 +92,12 @@ export function PDFMerger() {
     e.currentTarget.style.opacity = '0.4'
   }
 
-  const handleDragOver = (e: DragEvent<HTMLDivElement>, index: number) => {
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.dataTransfer.dropEffect = 'move'
   }
 
-  const handleDragEnter = (e: DragEvent<HTMLDivElement>, index: number) => {
+  const handleDragEnter = (e: DragEvent<HTMLDivElement>) => {
     e.currentTarget.classList.add('bg-gray-100')
   }
 
@@ -154,8 +154,8 @@ export function PDFMerger() {
                 className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm"
                 draggable
                 onDragStart={(e) => handleDragStart(e, index)}
-                onDragOver={(e) => handleDragOver(e, index)}
-                onDragEnter={(e) => handleDragEnter(e, index)}
+                onDragOver={(e) => handleDragOver(e)}
+                onDragEnter={(e) => handleDragEnter(e)}
                 onDragLeave={handleDragLeave}
                 onDrop={(e) => handleDrop(e, index)}
                 onDragEnd={handleDragEnd}
