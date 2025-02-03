@@ -12,6 +12,8 @@ interface FloatingShapeProps {
   duration: number
 }
 
+// From V0
+
 export default function FloatingShape({ color, top, left, right, bottom, size, duration }: FloatingShapeProps) {
   const shapeRef = useRef<HTMLDivElement>(null)
 
@@ -20,7 +22,7 @@ export default function FloatingShape({ color, top, left, right, bottom, size, d
     if (!shape) return
 
     const animatePosition = () => {
-      const newX = Math.random() * 20 - 10 // Move up to 10px in either direction
+      const newX = Math.random() * 20 - 10
       const newY = Math.random() * 20 - 10
 
       shape.animate(
