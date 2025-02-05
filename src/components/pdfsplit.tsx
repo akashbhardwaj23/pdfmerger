@@ -25,7 +25,7 @@ export function PDFSplitter() {
   const [pdfDocument, setPdfDocument] = useState<PDFDocument | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const loadPDF = async (file: File) => {
+  const loadPDF = useCallback(async (file: File) => {
     try {
       setLoading(true)
       setError(null)
@@ -45,7 +45,7 @@ export function PDFSplitter() {
       setError(`Failed to load PDF: ${err instanceof Error ? err.message : "Unknown error"}`)
       setLoading(false)
     }
-  }
+  }, [])
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
@@ -102,7 +102,7 @@ export function PDFSplitter() {
       context.fillStyle = "rgba(255,255,255,0.1)"
       context.fillRect(0, 0, width, height)
 
-      //@ts-ignore
+      //@ts-expect-error  could throw error
       const svgContent = await page.svg()
       const img = new Image()
       const svgBlob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" })

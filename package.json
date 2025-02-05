@@ -15,6 +15,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",
+    "mergepdfs": "file:",
     "next": "15.1.3",
     "pdf-lib": "^1.17.1",
     "react": "^19.0.0",
